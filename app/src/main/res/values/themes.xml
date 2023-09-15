@@ -4,6 +4,7 @@
         <item name="colorSecondary">@color/bright_navy_blue</item>
         <item name="colorOnError">@color/carnelian</item>
         <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:textColor">?attr/colorPrimaryText</item>
     </style>
 
     <style name="Theme.NASA" parent="Theme.NASA.Base">
@@ -12,6 +13,8 @@
         <item name="android:colorBackground">@color/platinum</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/eerie_black</item>
+        <item name="colorPrimaryText">@color/eerie_black</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
+
 </resources>

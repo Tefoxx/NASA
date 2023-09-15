@@ -4,3 +4,8 @@ plugins {
     id 'com.android.library' version '7.3.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.22' apply false
 }
+
+ext {
+    baseApiUrl = "https://api.nasa.gov/"
+    apiKey = "5ZIGI2tkEiUbv0V7kxuD7gFIBcUhHpIxmhmAdc1X"
+}

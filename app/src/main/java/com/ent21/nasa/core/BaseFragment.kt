@@ -1,4 +1,4 @@
-package com.ent21.nasa.base
+package com.ent21.nasa.core
 
 import android.os.Bundle
 import android.view.LayoutInflater
