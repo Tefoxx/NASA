@@ -16,6 +16,5 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
         super.onViewCreated(view, savedInstanceState)
 
 
-
     }
 }

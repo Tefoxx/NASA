@@ -5,6 +5,8 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.ent21.nasa.BuildConfig.API_URL
+import com.ent21.nasa.api.gateway.ApodApi
+import com.ent21.nasa.api.gateway.ApodRemoteGateway
 import com.google.gson.GsonBuilder
 
 val netModule = module {
@@ -16,4 +18,6 @@ val netModule = module {
             .build()
     }
     single { get<Retrofit>().create(ApiWebService::class.java) }
+
+    single<ApodRemoteGateway> { ApodApi(get()) }
 }

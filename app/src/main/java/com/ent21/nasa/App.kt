@@ -1,6 +1,7 @@
 package com.ent21.nasa
 
 import android.app.Application
+import com.ent21.nasa.di.dbModule
 import com.ent21.nasa.di.netModule
 import com.ent21.nasa.di.vmModule
 import org.koin.android.ext.koin.androidContext
@@ -17,6 +18,7 @@ class App : Application() {
             modules(
                 netModule,
                 vmModule,
+                dbModule,
             )
         }
     }
