@@ -5,7 +5,7 @@ import android.view.View
 import com.ent21.nasa.R
 import com.ent21.nasa.core.BaseFragment
 import com.ent21.nasa.databinding.FragmentFeedBinding
-import com.ent21.nasa.viewBinding
+import com.ent21.nasa.ui.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FeedFragment : BaseFragment(R.layout.fragment_feed) {
@@ -14,7 +14,6 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?): Unit = with(viewBinding) {
         super.onViewCreated(view, savedInstanceState)
-
 
     }
 }
