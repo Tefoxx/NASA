@@ -4,21 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.ent21.nasa.R
 import com.ent21.nasa.core.BaseViewHolder
+import com.ent21.nasa.databinding.ItemEmptyBinding
+import com.ent21.nasa.databinding.ItemFeedBinding
 import com.ent21.nasa.ui.viewholders.EmptyViewHolder
 import com.ent21.nasa.ui.viewholders.FeedViewHolder
 
 enum class ItemContentType {
     EmptyItemType {
         override fun onCreateViewHolder(parent: ViewGroup): BaseViewHolder<*> = EmptyViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_empty, parent, false)
+            ItemEmptyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
-        override fun onBindViewHolder(holder: BaseViewHolder<*>, item: Item) { }
+        override fun onBindViewHolder(holder: BaseViewHolder<*>, item: Item) {}
 
     },
     FeedItemType {
         override fun onCreateViewHolder(parent: ViewGroup): BaseViewHolder<*> = FeedViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_feed, parent, false)
+            ItemFeedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
         override fun onBindViewHolder(holder: BaseViewHolder<*>, item: Item) {

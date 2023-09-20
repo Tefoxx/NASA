@@ -1,20 +1,15 @@
 package com.ent21.nasa.ui
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.ent21.nasa.core.BaseViewHolder
 import com.ent21.nasa.ui.items.Item
 import com.ent21.nasa.ui.items.ItemContentType
 
-class Adapter(
+class PagingAdapter(
     diffCallback: DiffUtil.ItemCallback<Item>
-) : RecyclerView.Adapter<BaseViewHolder<*>>() {
-
-    fun setCollection(list: List<Item>) = differ.submitList(list)
-
-    private val differ = AsyncListDiffer(this, diffCallback)
+) : PagingDataAdapter<Item, BaseViewHolder<*>>(diffCallback) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -25,12 +20,12 @@ class Adapter(
         return itemType.onCreateViewHolder(parent)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) =
-        differ.currentList[position].let {
+    override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
+        getItem(position)?.let {
             it.getType().onBindViewHolder(holder, it)
         }
+    }
 
-    override fun getItemViewType(position: Int) = differ.currentList[position].getType().ordinal
-
-    override fun getItemCount(): Int = differ.currentList.size
+    override fun getItemViewType(position: Int) =
+        getItem(position)?.getType()?.ordinal ?: ItemContentType.EmptyItemType.ordinal
 }
