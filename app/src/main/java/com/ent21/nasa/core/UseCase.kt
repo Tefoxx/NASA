@@ -10,10 +10,8 @@ abstract class UseCase<in Params, out Result>(
 
     protected abstract suspend fun execute(params: Params): Result
 
-    suspend operator fun invoke(params: Params): Result {
-        return withContext(coroutineDispatcher) {
-            execute(params)
-        }
+    suspend operator fun invoke(params: Params): Result = withContext(coroutineDispatcher) {
+        execute(params)
     }
 }
 

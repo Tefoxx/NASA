@@ -7,6 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import com.ent21.nasa.BuildConfig.API_URL
 import com.ent21.nasa.api.gateway.ApodApi
 import com.ent21.nasa.api.gateway.ApodRemoteGateway
+import com.ent21.nasa.ui.feed.paging.FeedRemoteMediator
 import com.google.gson.GsonBuilder
 
 val netModule = module {
@@ -20,4 +21,6 @@ val netModule = module {
     single { get<Retrofit>().create(ApiWebService::class.java) }
 
     single<ApodRemoteGateway> { ApodApi(get()) }
+
+    factory { FeedRemoteMediator(get(), get()) }
 }

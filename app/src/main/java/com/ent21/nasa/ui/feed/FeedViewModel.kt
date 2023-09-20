@@ -1,14 +1,14 @@
 package com.ent21.nasa.ui.feed
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import androidx.paging.map
+import com.ent21.nasa.usecase.GetFeedPagingUseCaseAsLiveData
 
-class FeedViewModel : ViewModel() {
+private const val DEFAULT_PAGE_SIZE = 20
 
-    fun hui1(list: List<Any>) {
-
-    }
-
-    fun <T> hui2(list: List<T>) {
-
-    }
+class FeedViewModel(getFeedPagingUseCaseAsLiveData: GetFeedPagingUseCaseAsLiveData) : ViewModel() {
+    val feed = getFeedPagingUseCaseAsLiveData(
+        GetFeedPagingUseCaseAsLiveData.Param(DEFAULT_PAGE_SIZE)
+    )
 }

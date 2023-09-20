@@ -1,23 +1,42 @@
 package com.ent21.nasa.db.gateway
 
+import androidx.room.withTransaction
 import com.ent21.nasa.api.model.Apod
+import com.ent21.nasa.db.AppDatabase
 import com.ent21.nasa.db.dao.ApodDao
-import java.util.*
+import com.ent21.nasa.db.entity.ApodEntity
 
-class ApodDb(private val dao: ApodDao) : ApodLocalGateway {
-    override fun getApodsByDate(startDate: Date, endDate: Date): List<Apod> {
-        return listOf<Apod>()
+private const val DEFAULT_NUM = 0
+
+class ApodDb(private val database: AppDatabase, private val dao: ApodDao) : ApodLocalGateway {
+    override suspend fun insertAll(apods: List<Apod>) {
+        val lastNum = (getLastItem()?.num ?: DEFAULT_NUM) + 1
+        dao.insertAll(
+            apods.mapIndexed { index, apod ->
+                apod.toDb(lastNum + index)
+            }
+        )
     }
 
-    override fun getApodsRandom(count: Int): List<Apod> {
-        return listOf<Apod>()
+    override fun getSource() = dao.getPagingSource()
+
+    override suspend fun clearAndInsertAll(apods: List<Apod>) = database.withTransaction {
+        clearAll()
+        insertAll(apods)
     }
 
-    override fun saveApods(list: List<Apod>) {
+    override suspend fun getLastItem() = dao.getLastItem()
 
-    }
-
-    override fun deleteAll() {
-
-    }
+    override suspend fun clearAll() = dao.clearAll()
 }
+
+fun Apod.toDb(num: Int) = ApodEntity(
+    num = num,
+    date = date,
+    explanation = explanation,
+    hdUrl = hdUrl,
+    url = url,
+    thumbnailUrl = thumbnailUrl,
+    mediaType = mediaType,
+    title = title
+)

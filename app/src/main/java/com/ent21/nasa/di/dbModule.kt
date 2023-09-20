@@ -17,5 +17,5 @@ val dbModule = module {
     }
 
     single { get<AppDatabase>().apodDao() }
-    single<ApodLocalGateway> { ApodDb(get()) }
+    single<ApodLocalGateway> { ApodDb(get(), get()) }
 }
