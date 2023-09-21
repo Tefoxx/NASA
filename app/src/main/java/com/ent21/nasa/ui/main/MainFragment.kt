@@ -6,7 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.ent21.nasa.R
 import com.ent21.nasa.core.BaseFragment
 import com.ent21.nasa.databinding.FragmentMainBinding
-import com.ent21.nasa.viewBinding
+import com.ent21.nasa.ui.viewBinding
 
 class MainFragment : BaseFragment(R.layout.fragment_main) {
 

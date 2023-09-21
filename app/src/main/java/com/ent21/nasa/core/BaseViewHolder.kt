@@ -5,5 +5,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ent21.nasa.ui.items.Item
 
 abstract class BaseViewHolder<T : Item>(view: View) : RecyclerView.ViewHolder(view) {
+
     abstract fun bind(item: T)
 }

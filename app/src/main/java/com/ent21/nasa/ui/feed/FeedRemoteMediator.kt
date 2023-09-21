@@ -1,4 +1,4 @@
-package com.ent21.nasa.ui.feed.paging
+package com.ent21.nasa.ui.feed
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -23,7 +23,7 @@ class FeedRemoteMediator(
             when (loadType) {
                 LoadType.REFRESH -> { }
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
-                LoadType.APPEND -> localGateway.getLastItem()
+                LoadType.APPEND -> localGateway.getLastItemNum()
                     ?: return MediatorResult.Success(endOfPaginationReached = true)
             }
 

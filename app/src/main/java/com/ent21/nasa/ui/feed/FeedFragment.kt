@@ -18,8 +18,12 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?): Unit = with(viewBinding) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.action.observe(viewLifecycleOwner) {
+
+        }
+
         viewModel.feed.observe(viewLifecycleOwner) {
-//            adapter.submitData(it)
+            adapter.submitData(lifecycle, it)
         }
     }
 }

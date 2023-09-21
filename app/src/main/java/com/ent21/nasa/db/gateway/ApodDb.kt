@@ -2,6 +2,7 @@ package com.ent21.nasa.db.gateway
 
 import androidx.room.withTransaction
 import com.ent21.nasa.api.model.Apod
+import com.ent21.nasa.api.model.MediaType
 import com.ent21.nasa.db.AppDatabase
 import com.ent21.nasa.db.dao.ApodDao
 import com.ent21.nasa.db.entity.ApodEntity
@@ -9,8 +10,8 @@ import com.ent21.nasa.db.entity.ApodEntity
 private const val DEFAULT_NUM = 0
 
 class ApodDb(private val database: AppDatabase, private val dao: ApodDao) : ApodLocalGateway {
-    override suspend fun insertAll(apods: List<Apod>) {
-        val lastNum = (getLastItem()?.num ?: DEFAULT_NUM) + 1
+    override suspend fun insertAll(apods: List<Apod>) = database.withTransaction {
+        val lastNum = (getLastItemNum() ?: DEFAULT_NUM) + 1
         dao.insertAll(
             apods.mapIndexed { index, apod ->
                 apod.toDb(lastNum + index)
@@ -25,7 +26,7 @@ class ApodDb(private val database: AppDatabase, private val dao: ApodDao) : Apod
         insertAll(apods)
     }
 
-    override suspend fun getLastItem() = dao.getLastItem()
+    override suspend fun getLastItemNum() = dao.getLastItem()
 
     override suspend fun clearAll() = dao.clearAll()
 }
@@ -37,6 +38,6 @@ fun Apod.toDb(num: Int) = ApodEntity(
     hdUrl = hdUrl,
     url = url,
     thumbnailUrl = thumbnailUrl,
-    mediaType = mediaType,
+    mediaType = MediaType.getByTitle(mediaType),
     title = title
 )

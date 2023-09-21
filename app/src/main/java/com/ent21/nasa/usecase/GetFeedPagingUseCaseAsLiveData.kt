@@ -5,7 +5,7 @@ import androidx.paging.*
 import com.ent21.nasa.core.UseCaseAsLiveData
 import com.ent21.nasa.db.entity.ApodEntity
 import com.ent21.nasa.db.gateway.ApodLocalGateway
-import com.ent21.nasa.ui.feed.paging.FeedRemoteMediator
+import com.ent21.nasa.ui.feed.FeedRemoteMediator
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 

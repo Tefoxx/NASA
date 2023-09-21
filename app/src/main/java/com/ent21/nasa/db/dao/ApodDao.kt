@@ -16,7 +16,7 @@ interface ApodDao {
     fun getPagingSource(): PagingSource<Int, ApodEntity>
 
     @Query("select max(num) from ${ApodEntity.NAME}")
-    fun getLastItem(): ApodEntity?
+    suspend fun getLastItem(): Int?
 
     @Query("delete from ${ApodEntity.NAME}")
     suspend fun clearAll()

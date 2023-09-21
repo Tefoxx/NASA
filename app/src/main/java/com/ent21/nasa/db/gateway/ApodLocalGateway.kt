@@ -9,6 +9,6 @@ interface ApodLocalGateway {
     suspend fun insertAll(apods: List<Apod>)
     fun getSource(): PagingSource<Int, ApodEntity>
     suspend fun clearAndInsertAll(apods: List<Apod>)
-    suspend fun getLastItem(): ApodEntity?
+    suspend fun getLastItemNum(): Int?
     suspend fun clearAll()
 }
