@@ -16,7 +16,5 @@ class FeedViewHolder(private val viewBinding: ItemFeedBinding) :
         root.setOnClickListener { item.onClick() }
     }
 
-    private fun updateImage(item: FeedItem) = with(viewBinding) {
-        imageView.load(item.imgUrl)
-    }
+    private fun updateImage(item: FeedItem) = viewBinding.imageView.load(item.imgUrl)
 }

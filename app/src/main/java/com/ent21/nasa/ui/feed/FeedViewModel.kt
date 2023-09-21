@@ -19,7 +19,7 @@ import com.ent21.nasa.utils.launchSafe
 import kotlinx.coroutines.delay
 import java.util.UUID
 
-private const val DEFAULT_PAGE_SIZE = 20
+private const val DEFAULT_PAGE_SIZE = 10
 
 class FeedViewModel(getFeedPagingUseCaseAsLiveData: GetFeedPagingUseCaseAsLiveData) : ViewModel() {
 

@@ -1,5 +1,6 @@
 package com.ent21.nasa.utils
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
@@ -46,7 +47,7 @@ fun ImageView.load(
             isFirstResource: Boolean
         ): Boolean {
             onFailed?.invoke(e)
-            return true
+            return false
         }
 
         override fun onResourceReady(
@@ -57,7 +58,9 @@ fun ImageView.load(
             isFirstResource: Boolean
         ): Boolean {
             onLoaded?.invoke(resource)
-            return true
+            return false
         }
     }).into(this)
 }
+
+fun Context.getDp(value: Int): Int = (resources.displayMetrics.density * value).toInt()

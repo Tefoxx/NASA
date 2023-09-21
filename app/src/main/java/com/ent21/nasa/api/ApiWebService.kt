@@ -19,6 +19,6 @@ interface ApiWebService {
     suspend fun getApodsRandom(
         @Query("count") @IntRange(0, 100) count: Int,
         @Query("thumbs") thumbs: Boolean = true,
-        @Query("qpi_key") apiKey: String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
     ) : List<Apod>
 }
