@@ -2,16 +2,18 @@ package com.ent21.nasa.utils
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
+import com.ent21.nasa.ui.items.Item
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -33,34 +35,32 @@ fun ViewModel.launchSafe(
 
 fun ImageView.load(
     url: String,
-    @DrawableRes placeholder: Int? = null,
-    onFailed: ((GlideException?) -> Unit)? = null,
-    onLoaded: ((Drawable) -> Unit)? = null
+    @DrawableRes placeholderId: Int? = null,
+    @DrawableRes errorImgId: Int? = null,
+    listener: RequestListener<Drawable>? = null,
 ) {
     val options = RequestOptions()
-    placeholder?.let { options.placeholder(placeholder) }
-    Glide.with(this).load(url).apply(options).listener(object : RequestListener<Drawable> {
-        override fun onLoadFailed(
-            e: GlideException?,
-            model: Any?,
-            target: Target<Drawable>,
-            isFirstResource: Boolean
-        ): Boolean {
-            onFailed?.invoke(e)
-            return false
-        }
-
-        override fun onResourceReady(
-            resource: Drawable,
-            model: Any,
-            target: Target<Drawable>?,
-            dataSource: DataSource,
-            isFirstResource: Boolean
-        ): Boolean {
-            onLoaded?.invoke(resource)
-            return false
-        }
-    }).into(this)
+    placeholderId?.let { options.placeholder(placeholderId) }
+    errorImgId?.let { options.error(errorImgId) }
+    Glide.with(this).load(url).apply(options).listener(listener).into(this)
 }
 
 fun Context.getDp(value: Int): Int = (resources.displayMetrics.density * value).toInt()
+
+fun Fragment.toast(text: String) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+
+fun View.updateMargin(
+    left: Int? = null,
+    top: Int? = null,
+    right: Int? = null,
+    bottom: Int? = null
+) = (layoutParams as? ViewGroup.MarginLayoutParams)?.let {
+    it.setMargins(
+        left ?: it.leftMargin,
+        top ?: it.topMargin,
+        right ?: it.rightMargin,
+        bottom ?: it.bottomMargin
+    )
+}
+
+fun <T : Item> T.toItem(): Item = this

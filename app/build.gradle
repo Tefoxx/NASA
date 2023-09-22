@@ -96,4 +96,11 @@ dependencies {
 
     def swipe_refresh_version = "1.2.0-alpha01"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_version"
+
+    def shimmer_version = "0.5.0"
+    implementation "com.facebook.shimmer:shimmer:$shimmer_version"
+
+    def exoplayer_version = "2.19.1"
+    implementation "com.google.android.exoplayer:exoplayer:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
 }

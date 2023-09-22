@@ -7,5 +7,6 @@
         <item name="colorSurface">@color/charleston_green</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="colorPrimaryText">@color/white</item>
+        <item name="colorShimmer">@color/gray</item>
     </style>
 </resources>

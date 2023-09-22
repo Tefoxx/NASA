@@ -2,7 +2,7 @@ package com.ent21.nasa.db
 
 import androidx.room.TypeConverter
 import com.ent21.nasa.api.model.MediaType
-import java.util.Date
+import java.util.*
 
 class Converter {
     @TypeConverter

@@ -2,4 +2,7 @@
     <string name="app_name">NASA</string>
     <string name="feed">Feed</string>
     <string name="earth">Earth</string>
+    <string name="error_message">Error\nSomething went wrong</string>
+    <string name="video">Video</string>
+    <string name="update_error">Update error</string>
 </resources>

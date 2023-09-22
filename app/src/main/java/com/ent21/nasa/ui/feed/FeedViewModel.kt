@@ -2,7 +2,6 @@ package com.ent21.nasa.ui.feed
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
@@ -10,21 +9,19 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.ent21.nasa.api.model.MediaType
 import com.ent21.nasa.db.entity.ApodEntity
-import com.ent21.nasa.ui.items.EmptyItem
 import com.ent21.nasa.ui.items.FeedItem
-import com.ent21.nasa.ui.items.FeedVideoItem
 import com.ent21.nasa.usecase.GetFeedPagingUseCaseAsLiveData
 import com.ent21.nasa.usecase.UpdateFeedUseCase
 import com.ent21.nasa.utils.SingleLiveEvent
 import com.ent21.nasa.utils.launchSafe
-import kotlinx.coroutines.delay
-import java.util.UUID
+import com.ent21.nasa.utils.toItem
+import java.util.*
 
 private const val DEFAULT_PAGE_SIZE = 10
 
 class FeedViewModel(
     private val updateFeedUseCase: UpdateFeedUseCase,
-    getFeedPagingUseCaseAsLiveData: GetFeedPagingUseCaseAsLiveData
+    getFeedPagingUseCaseAsLiveData: GetFeedPagingUseCaseAsLiveData,
 ) : ViewModel() {
 
     private val _action = SingleLiveEvent<FeedAction>()
@@ -33,29 +30,17 @@ class FeedViewModel(
     val feed = getFeedPagingUseCaseAsLiveData(
         GetFeedPagingUseCaseAsLiveData.Param(DEFAULT_PAGE_SIZE)
     ).cachedIn(viewModelScope).map { data ->
-        data.map {
-            when (it.mediaType) {
-                MediaType.IMAGE -> toFeedItem(it)
-                MediaType.VIDEO -> toFeedVideoItem(it)
-                else -> {
-                    Log.e("PAGING MAPPING", "not supported mediaType")
-                    EmptyItem()
-                }
-            }
-        }
+        data.map { toFeedItem(it).toItem() }
     }
 
-    fun update() {
+    fun update(onErrorMessage: String? = null) {
         launchSafe(
-            body = {
-                updateFeedUseCase(UpdateFeedUseCase.Param(DEFAULT_PAGE_SIZE))
+            body = { updateFeedUseCase(UpdateFeedUseCase.Param(DEFAULT_PAGE_SIZE)) },
+            onError = { throwable ->
+                onErrorMessage?.let { _action.value = FeedAction.ShowToast(it) }
+                Log.e("SNK", "Could not update feed", throwable)
             },
-            onError = {
-                Log.e("SNK", "Could not update feed", it)
-            },
-            final = {
-                _action.value = FeedAction.HideRefresh
-            }
+            final = { _action.value = FeedAction.HideRefresh }
         )
     }
 
@@ -63,21 +48,13 @@ class FeedViewModel(
         id = UUID.randomUUID().toString(),
         date = apod.date,
         explanation = apod.explanation,
-        imgUrl = apod.hdUrl ?: apod.url,
-        title = apod.title
-    ) {
-        _action.value = FeedAction.ShowDetails
-    }
-
-    private fun toFeedVideoItem(apod: ApodEntity) = FeedVideoItem(
-        id = UUID.randomUUID().toString(),
-        date = apod.date,
-        explanation = apod.explanation,
-        thumbnailUrl = apod.thumbnailUrl.orEmpty(),
+        imgUrl = if (apod.mediaType == MediaType.VIDEO)
+            apod.thumbnailUrl ?: "" else apod.hdUrl ?: apod.url,
         title = apod.title,
-        videoUrl = apod.url
+        videoUrl = if (apod.mediaType == MediaType.VIDEO) apod.url else null
     ) {
-        _action.value = FeedAction.ShowVideoDetails
+        _action.value = if (apod.mediaType == MediaType.VIDEO)
+            FeedAction.ShowVideoDetails else FeedAction.ShowDetails
     }
 }
 
@@ -85,4 +62,5 @@ sealed class FeedAction {
     object ShowDetails : FeedAction()
     object ShowVideoDetails : FeedAction()
     object HideRefresh : FeedAction()
+    data class ShowToast(val text: String) : FeedAction()
 }

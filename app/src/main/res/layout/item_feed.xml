@@ -7,6 +7,53 @@
     android:background="@drawable/background_card"
     android:paddingBottom="8dp">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:shimmer_repeat_mode="restart"
+        app:shimmer_shape="linear">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorShimmer"
+            tools:ignore="ContentDescription" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <ImageView
+        android:id="@+id/errorImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_error"
+        app:layout_constraintBottom_toTopOf="@+id/errorTextView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/error_message"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/errorImageView"
+        app:layout_constraintVertical_chainStyle="packed" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -17,17 +64,29 @@
         tools:ignore="ContentDescription"
         tools:src="@sample/image" />
 
+    <ImageView
+        android:id="@+id/videoIconView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/icon_video"
+        app:layout_constraintBottom_toBottomOf="@+id/titleTextView"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/startGuideLine"
+        app:layout_constraintTop_toTopOf="@+id/titleTextView"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/endGuideLine"
-        app:layout_constraintStart_toStartOf="@+id/startGuideLine"
+        app:layout_constraintStart_toEndOf="@+id/videoIconView"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:text="@tools:sample/lorem" />
 
@@ -68,5 +127,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="8dp" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/errorGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="errorImageView,errorTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

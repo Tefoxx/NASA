@@ -3,7 +3,7 @@ package com.ent21.nasa.db.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.ent21.nasa.api.model.MediaType
-import java.util.Date
+import java.util.*
 
 @Entity(tableName = ApodEntity.NAME)
 data class ApodEntity(

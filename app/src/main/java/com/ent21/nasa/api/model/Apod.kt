@@ -3,7 +3,7 @@ package com.ent21.nasa.api.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import java.util.Date
+import java.util.*
 
 @Parcelize
 data class Apod(
