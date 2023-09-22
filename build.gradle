@@ -8,5 +8,6 @@ plugins {
 
 ext {
     baseApiUrl = "https://api.nasa.gov/"
-    apiKey = "5ZIGI2tkEiUbv0V7kxuD7gFIBcUhHpIxmhmAdc1X"
+    localProperties = new Properties()
+    localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 }

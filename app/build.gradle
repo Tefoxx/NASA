@@ -21,6 +21,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField STRING, API_URL, "\"${rootProject.ext.baseApiUrl}\""
+        buildConfigField STRING, API_KEY, "\"${rootProject.ext.localProperties["apiKey"]}\""
     }
 
     buildFeatures {
@@ -30,16 +33,12 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            buildConfigField STRING, API_URL, "\"${rootProject.ext.baseApiUrl}\""
-            buildConfigField STRING, API_KEY, "\"${rootProject.ext.apiKey}\""
             applicationIdSuffix ".debug"
             debuggable true
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField STRING, API_URL, "\"${rootProject.ext.baseApiUrl}\""
-            buildConfigField STRING, API_KEY, "\"${rootProject.ext.apiKey}\""
         }
     }
 
