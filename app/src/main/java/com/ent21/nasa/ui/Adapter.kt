@@ -26,9 +26,25 @@ class Adapter(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) =
+        onBindHolder(holder, position)
+
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<*>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) = onBindHolder(holder, position, payloads)
+
+    @Suppress("UNCHECKED_CAST")
+    fun onBindHolder(
+        holder: BaseViewHolder<*>,
+        position: Int,
+        payloads: MutableList<Any>? = null
+    ) {
+        holder as BaseViewHolder<Item>
         differ.currentList[position].let {
-            it.getType().onBindViewHolder(holder, it)
+            if (payloads.isNullOrEmpty()) holder.bind(it) else holder.update(it, payloads[0] as Set<*>)
         }
+    }
 
     override fun getItemViewType(position: Int) = differ.currentList[position].getType().ordinal
 

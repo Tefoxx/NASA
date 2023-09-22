@@ -27,8 +27,14 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
             recyclerView.addItemDecoration(SpaceItemDecorator(it, it, it, it, it))
         }
 
-        viewModel.action.observe(viewLifecycleOwner) {
+        swipeRefreshLayout.setOnRefreshListener { viewModel.update() }
 
+        viewModel.action.observe(viewLifecycleOwner) { action ->
+            when (action) {
+                FeedAction.HideRefresh -> swipeRefreshLayout.isRefreshing = false
+                FeedAction.ShowDetails -> {}
+                FeedAction.ShowVideoDetails -> {}
+            }
         }
 
         viewModel.feed.observe(viewLifecycleOwner) {

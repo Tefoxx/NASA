@@ -16,30 +16,17 @@ enum class ItemContentType {
         override fun onCreateViewHolder(parent: ViewGroup): BaseViewHolder<*> = EmptyViewHolder(
             ItemEmptyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
-
-        override fun onBindViewHolder(holder: BaseViewHolder<*>, item: Item) {}
-
     },
     FeedItemType {
         override fun onCreateViewHolder(parent: ViewGroup): BaseViewHolder<*> = FeedViewHolder(
             ItemFeedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
-
-        override fun onBindViewHolder(holder: BaseViewHolder<*>, item: Item) {
-            (holder as FeedViewHolder).bind(item as FeedItem)
-        }
     },
     FeedVideoItemType {
         override fun onCreateViewHolder(parent: ViewGroup): BaseViewHolder<*> = FeedVideoViewHolder(
             ItemFeedVideoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
-
-        override fun onBindViewHolder(holder: BaseViewHolder<*>, item: Item) {
-            (holder as FeedVideoViewHolder).bind(item as FeedVideoItem)
-        }
-
     };
 
     abstract fun onCreateViewHolder(parent: ViewGroup): BaseViewHolder<*>
-    abstract fun onBindViewHolder(holder: BaseViewHolder<*>, item: Item)
 }

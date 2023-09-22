@@ -20,12 +20,27 @@ class PagingAdapter(
         return itemType.onCreateViewHolder(parent)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-        getItem(position)?.let {
-            it.getType().onBindViewHolder(holder, it)
-        }
-    }
-
     override fun getItemViewType(position: Int) =
         getItem(position)?.getType()?.ordinal ?: ItemContentType.EmptyItemType.ordinal
+
+    override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) =
+        onBindHolder(holder, position)
+
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<*>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) = onBindHolder(holder, position, payloads)
+
+    @Suppress("UNCHECKED_CAST")
+    fun onBindHolder(
+        holder: BaseViewHolder<*>,
+        position: Int,
+        payloads: MutableList<Any>? = null
+    ) {
+        holder as BaseViewHolder<Item>
+        getItem(position)?.let {
+            if (payloads.isNullOrEmpty()) holder.bind(it) else holder.update(it, payloads[0] as Set<*>)
+        }
+    }
 }

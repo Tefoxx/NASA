@@ -14,6 +14,7 @@ import com.ent21.nasa.ui.items.EmptyItem
 import com.ent21.nasa.ui.items.FeedItem
 import com.ent21.nasa.ui.items.FeedVideoItem
 import com.ent21.nasa.usecase.GetFeedPagingUseCaseAsLiveData
+import com.ent21.nasa.usecase.UpdateFeedUseCase
 import com.ent21.nasa.utils.SingleLiveEvent
 import com.ent21.nasa.utils.launchSafe
 import kotlinx.coroutines.delay
@@ -21,7 +22,10 @@ import java.util.UUID
 
 private const val DEFAULT_PAGE_SIZE = 10
 
-class FeedViewModel(getFeedPagingUseCaseAsLiveData: GetFeedPagingUseCaseAsLiveData) : ViewModel() {
+class FeedViewModel(
+    private val updateFeedUseCase: UpdateFeedUseCase,
+    getFeedPagingUseCaseAsLiveData: GetFeedPagingUseCaseAsLiveData
+) : ViewModel() {
 
     private val _action = SingleLiveEvent<FeedAction>()
     val action: LiveData<FeedAction> = _action
@@ -39,6 +43,20 @@ class FeedViewModel(getFeedPagingUseCaseAsLiveData: GetFeedPagingUseCaseAsLiveDa
                 }
             }
         }
+    }
+
+    fun update() {
+        launchSafe(
+            body = {
+                updateFeedUseCase(UpdateFeedUseCase.Param(DEFAULT_PAGE_SIZE))
+            },
+            onError = {
+                Log.e("SNK", "Could not update feed", it)
+            },
+            final = {
+                _action.value = FeedAction.HideRefresh
+            }
+        )
     }
 
     private fun toFeedItem(apod: ApodEntity) = FeedItem(
@@ -66,4 +84,5 @@ class FeedViewModel(getFeedPagingUseCaseAsLiveData: GetFeedPagingUseCaseAsLiveDa
 sealed class FeedAction {
     object ShowDetails : FeedAction()
     object ShowVideoDetails : FeedAction()
+    object HideRefresh : FeedAction()
 }
