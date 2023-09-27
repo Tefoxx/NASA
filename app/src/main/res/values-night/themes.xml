@@ -3,7 +3,7 @@
     <style name="Theme.NASA" parent="Theme.NASA.Base">
         <item name="colorPrimary">@color/bright_navy_blue</item>
         <item name="colorOnPrimary">@color/charleston_green</item>
-        <item name="background">@color/eerie_black</item>
+        <item name="android:colorBackground">@color/eerie_black</item>
         <item name="colorSurface">@color/charleston_green</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="colorPrimaryText">@color/white</item>
