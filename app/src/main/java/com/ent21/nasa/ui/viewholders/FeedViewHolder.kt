@@ -54,6 +54,7 @@ class FeedViewHolder(private val viewBinding: ItemFeedBinding) :
         updateImage(item)
         updateDate(item)
         updateVideoIcon(item)
+        updateNum(item)
         root.setOnClickListener { item.onClick() }
     }
 
@@ -65,6 +66,10 @@ class FeedViewHolder(private val viewBinding: ItemFeedBinding) :
             FeedItem.TITLE_KEY -> updateTitle(item)
             FeedItem.VIDEO_URL_KEY -> updateVideoIcon(item)
         }
+    }
+
+    private fun updateNum(item: FeedItem) = with(viewBinding) {
+        testView.text = item.num.toString()
     }
 
     private fun updateTitle(item: FeedItem) = with(viewBinding) {

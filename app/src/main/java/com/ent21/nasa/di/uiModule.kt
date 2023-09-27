@@ -10,7 +10,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val uiModule = module {
-    viewModel { FeedViewModel(get(), get()) }
+    viewModel { FeedViewModel(get()) }
     factory<DiffUtil.ItemCallback<Item>> { ItemCallback() }
     factory { Adapter(get()) }
     factory { PagingAdapter(get()) }

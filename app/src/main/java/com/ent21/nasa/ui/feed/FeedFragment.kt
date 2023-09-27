@@ -2,6 +2,9 @@ package com.ent21.nasa.ui.feed
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.ent21.nasa.R
 import com.ent21.nasa.core.BaseFragment
 import com.ent21.nasa.databinding.FragmentFeedBinding
@@ -27,8 +30,12 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
             recyclerView.addItemDecoration(SpaceItemDecorator(it, it, it, it, it))
         }
 
+        adapter.loadStateFlow.asLiveData().observe(viewLifecycleOwner) {
+            swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
+        }
+
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.update(getString(R.string.update_error))
+            adapter.refresh()
         }
 
         viewModel.action.observe(viewLifecycleOwner) { action ->

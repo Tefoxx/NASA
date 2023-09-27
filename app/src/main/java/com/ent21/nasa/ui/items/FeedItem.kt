@@ -4,6 +4,7 @@ import java.util.*
 
 data class FeedItem(
     override val id: String,
+    val num: Int,
     val date: Date,
     val explanation: String,
     val imgUrl: String,

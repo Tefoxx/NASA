@@ -1,6 +1,5 @@
 package com.ent21.nasa.ui.feed
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
@@ -11,16 +10,12 @@ import com.ent21.nasa.api.model.MediaType
 import com.ent21.nasa.db.entity.ApodEntity
 import com.ent21.nasa.ui.items.FeedItem
 import com.ent21.nasa.usecase.GetFeedPagingUseCaseAsLiveData
-import com.ent21.nasa.usecase.UpdateFeedUseCase
 import com.ent21.nasa.utils.SingleLiveEvent
-import com.ent21.nasa.utils.launchSafe
 import com.ent21.nasa.utils.toItem
-import java.util.*
 
 private const val DEFAULT_PAGE_SIZE = 10
 
 class FeedViewModel(
-    private val updateFeedUseCase: UpdateFeedUseCase,
     getFeedPagingUseCaseAsLiveData: GetFeedPagingUseCaseAsLiveData,
 ) : ViewModel() {
 
@@ -33,25 +28,22 @@ class FeedViewModel(
         data.map { toFeedItem(it).toItem() }
     }
 
-    fun update(onErrorMessage: String? = null) {
-        launchSafe(
-            body = { updateFeedUseCase(UpdateFeedUseCase.Param(DEFAULT_PAGE_SIZE)) },
-            onError = { throwable ->
-                onErrorMessage?.let { _action.value = FeedAction.ShowToast(it) }
-                Log.e("SNK", "Could not update feed", throwable)
-            },
-            final = { _action.value = FeedAction.HideRefresh }
-        )
-    }
-
+    /*
+    id = "${apod.date.time}${apod.num}" - This is necessary for diffutil to work correctly (yes,
+    diffutil is not needed in this example, but was added for the technical component), because
+    NASA api does not provide unique ids in the response (although the date can be used as an id),
+    and if it did, the feed is random and has repeating elements (in this case, diffutil would
+    still not work correctly)
+    */
     private fun toFeedItem(apod: ApodEntity) = FeedItem(
-        id = UUID.randomUUID().toString(),
+        id = "${apod.date.time}${apod.num}",
         date = apod.date,
         explanation = apod.explanation,
         imgUrl = if (apod.mediaType == MediaType.VIDEO)
             apod.thumbnailUrl ?: "" else apod.hdUrl ?: apod.url,
         title = apod.title,
-        videoUrl = if (apod.mediaType == MediaType.VIDEO) apod.url else null
+        videoUrl = if (apod.mediaType == MediaType.VIDEO) apod.url else null,
+        num = apod.num
     ) {
         _action.value = if (apod.mediaType == MediaType.VIDEO)
             FeedAction.ShowVideoDetails else FeedAction.ShowDetails
