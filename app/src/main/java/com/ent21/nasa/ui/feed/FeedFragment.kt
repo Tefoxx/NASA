@@ -1,10 +1,12 @@
 package com.ent21.nasa.ui.feed
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import com.ent21.nasa.R
 import com.ent21.nasa.core.BaseFragment
 import com.ent21.nasa.databinding.FragmentFeedBinding
@@ -31,17 +33,29 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
         }
 
         adapter.loadStateFlow.asLiveData().observe(viewLifecycleOwner) {
-            swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
+            viewModel.loadStateController.updateState(it)
+        }
+
+        adapter.onPagesUpdatedFlow.asLiveData().observe(viewLifecycleOwner) {
+            viewModel.loadStateController.itemsWasUpdated()
         }
 
         swipeRefreshLayout.setOnRefreshListener {
             adapter.refresh()
         }
 
+        viewModel.isRefreshing.observe(viewLifecycleOwner) {
+            swipeRefreshLayout.isRefreshing = it
+        }
+
         viewModel.action.observe(viewLifecycleOwner) { action ->
             when (action) {
-                is FeedAction.HideRefresh -> swipeRefreshLayout.isRefreshing = false
-                is FeedAction.ShowToast -> toast(action.text)
+                is FeedAction.ShowRefresh -> swipeRefreshLayout.isRefreshing = action.show
+                is FeedAction.ShowToast -> toast(action.textResId)
+                is FeedAction.ScrollToPosition -> {
+                    Log.d("SNK", "Scrolled to top")
+                    recyclerView.scrollToPosition(0)
+                }
                 is FeedAction.ShowDetails -> {}
                 is FeedAction.ShowVideoDetails -> {}
             }

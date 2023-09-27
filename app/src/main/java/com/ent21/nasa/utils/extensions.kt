@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -47,7 +48,8 @@ fun ImageView.load(
 
 fun Context.getDp(value: Int): Int = (resources.displayMetrics.density * value).toInt()
 
-fun Fragment.toast(text: String) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+fun Fragment.toast(@StringRes textResId: Int) =
+    Toast.makeText(context, getString(textResId), Toast.LENGTH_LONG).show()
 
 fun View.updateMargin(
     left: Int? = null,

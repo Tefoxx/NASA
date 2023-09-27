@@ -3,6 +3,7 @@ package com.ent21.nasa.ui
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.ent21.nasa.core.BaseViewHolder
 import com.ent21.nasa.ui.items.Item
 import com.ent21.nasa.ui.items.ItemContentType

@@ -1,13 +1,13 @@
 package com.ent21.nasa.ui.feed
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
-import androidx.lifecycle.viewModelScope
+import androidx.annotation.StringRes
+import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.ent21.nasa.R
 import com.ent21.nasa.api.model.MediaType
 import com.ent21.nasa.db.entity.ApodEntity
+import com.ent21.nasa.ui.LoadStateController
 import com.ent21.nasa.ui.items.FeedItem
 import com.ent21.nasa.usecase.GetFeedPagingUseCaseAsLiveData
 import com.ent21.nasa.utils.SingleLiveEvent
@@ -22,11 +22,21 @@ class FeedViewModel(
     private val _action = SingleLiveEvent<FeedAction>()
     val action: LiveData<FeedAction> = _action
 
+    private val _isRefreshing = MutableLiveData(false)
+    val isRefreshing = _isRefreshing
+
     val feed = getFeedPagingUseCaseAsLiveData(
         GetFeedPagingUseCaseAsLiveData.Param(DEFAULT_PAGE_SIZE)
     ).cachedIn(viewModelScope).map { data ->
         data.map { toFeedItem(it).toItem() }
     }
+
+    val loadStateController = LoadStateController(
+        onRefresh = { _isRefreshing.value = it },
+        scrollToTop = { _action.value = FeedAction.ScrollToPosition(0) },
+        onError = { _action.value = FeedAction.ShowToast(R.string.update_error) },
+        scope = viewModelScope
+    )
 
     /*
     id = "${apod.date.time}${apod.num}" - This is necessary for diffutil to work correctly (yes,
@@ -53,6 +63,7 @@ class FeedViewModel(
 sealed class FeedAction {
     object ShowDetails : FeedAction()
     object ShowVideoDetails : FeedAction()
-    object HideRefresh : FeedAction()
-    data class ShowToast(val text: String) : FeedAction()
+    data class ScrollToPosition(val position: Int) : FeedAction()
+    data class ShowRefresh(val show: Boolean) : FeedAction()
+    data class ShowToast(@StringRes val textResId: Int) : FeedAction()
 }
