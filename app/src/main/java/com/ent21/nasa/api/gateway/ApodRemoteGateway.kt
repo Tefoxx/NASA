@@ -1,7 +1,7 @@
 package com.ent21.nasa.api.gateway
 
 import com.ent21.nasa.api.model.Apod
-import java.util.*
+import java.util.Date
 
 interface ApodRemoteGateway {
     suspend fun getApodsByDate(startDate: Date, endDate: Date): List<Apod>

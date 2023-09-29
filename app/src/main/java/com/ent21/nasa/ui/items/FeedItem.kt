@@ -1,6 +1,6 @@
 package com.ent21.nasa.ui.items
 
-import java.util.*
+import java.util.Date
 
 data class FeedItem(
     override val id: String,

@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.ent21.nasa.ui.MainNavigation
 import com.ent21.nasa.ui.items.Item
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -66,3 +67,5 @@ fun View.updateMargin(
 }
 
 fun <T : Item> T.toItem(): Item = this
+
+fun Fragment.getMainNav() = (activity as? MainNavigation)?.getMainNavController()

@@ -1,7 +1,11 @@
 package com.ent21.nasa.ui.feed
 
 import androidx.annotation.StringRes
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.ent21.nasa.R
@@ -56,12 +60,12 @@ class FeedViewModel(
         num = apod.num
     ) {
         _action.value = if (apod.mediaType == MediaType.VIDEO)
-            FeedAction.ShowVideoDetails else FeedAction.ShowDetails
+            FeedAction.ShowVideoDetails else FeedAction.ShowDetails(apod)
     }
 }
 
 sealed class FeedAction {
-    object ShowDetails : FeedAction()
+    data class ShowDetails(val apod: ApodEntity) : FeedAction()
     object ShowVideoDetails : FeedAction()
     data class ScrollToPosition(val position: Int) : FeedAction()
     data class ShowRefresh(val show: Boolean) : FeedAction()

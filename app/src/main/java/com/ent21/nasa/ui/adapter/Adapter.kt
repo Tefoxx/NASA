@@ -1,16 +1,20 @@
-package com.ent21.nasa.ui
+package com.ent21.nasa.ui.adapter
 
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ent21.nasa.core.BaseViewHolder
 import com.ent21.nasa.ui.items.Item
 import com.ent21.nasa.ui.items.ItemContentType
 
-class PagingAdapter(
+class Adapter(
     diffCallback: DiffUtil.ItemCallback<Item>
-) : PagingDataAdapter<Item, BaseViewHolder<*>>(diffCallback) {
+) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+
+    fun setCollection(list: List<Item>) = differ.submitList(list)
+
+    private val differ = AsyncListDiffer(this, diffCallback)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -20,9 +24,6 @@ class PagingAdapter(
             ?: ItemContentType.EmptyItemType
         return itemType.onCreateViewHolder(parent)
     }
-
-    override fun getItemViewType(position: Int) =
-        getItem(position)?.getType()?.ordinal ?: ItemContentType.EmptyItemType.ordinal
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) =
         onBindHolder(holder, position)
@@ -40,8 +41,12 @@ class PagingAdapter(
         payloads: MutableList<Any>? = null
     ) {
         holder as BaseViewHolder<Item>
-        getItem(position)?.let {
+        differ.currentList[position].let {
             if (payloads.isNullOrEmpty()) holder.bind(it) else holder.update(it, payloads[0] as Set<*>)
         }
     }
+
+    override fun getItemViewType(position: Int) = differ.currentList[position].getType().ordinal
+
+    override fun getItemCount(): Int = differ.currentList.size
 }

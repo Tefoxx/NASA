@@ -13,7 +13,7 @@ import com.ent21.nasa.utils.getDp
 import com.ent21.nasa.utils.load
 import com.ent21.nasa.utils.updateMargin
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 private const val VIDEO_ICON_MARGIN = 8
 

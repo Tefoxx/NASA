@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
-import androidx.recyclerview.widget.RecyclerView
+import com.ent21.nasa.MainNavGraphDirections
 import com.ent21.nasa.R
 import com.ent21.nasa.core.BaseFragment
 import com.ent21.nasa.databinding.FragmentFeedBinding
-import com.ent21.nasa.ui.PagingAdapter
+import com.ent21.nasa.ui.adapter.PagingAdapter
 import com.ent21.nasa.ui.viewBinding
 import com.ent21.nasa.utils.SpaceItemDecorator
 import com.ent21.nasa.utils.getDp
+import com.ent21.nasa.utils.getMainNav
 import com.ent21.nasa.utils.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,11 +51,11 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
             when (action) {
                 is FeedAction.ShowRefresh -> swipeRefreshLayout.isRefreshing = action.show
                 is FeedAction.ShowToast -> toast(action.textResId)
-                is FeedAction.ScrollToPosition -> {
-                    Log.d("SNK", "Scrolled to top")
-                    recyclerView.scrollToPosition(0)
-                }
-                is FeedAction.ShowDetails -> {}
+                is FeedAction.ScrollToPosition -> recyclerView.scrollToPosition(0)
+                is FeedAction.ShowDetails -> getMainNav()?.navigate(
+                    MainNavGraphDirections.toDetailFragment(action.apod)
+                )
+
                 is FeedAction.ShowVideoDetails -> {}
             }
         }

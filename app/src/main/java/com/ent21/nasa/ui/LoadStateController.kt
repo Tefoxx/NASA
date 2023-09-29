@@ -3,7 +3,9 @@ package com.ent21.nasa.ui
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 
 class LoadStateController(

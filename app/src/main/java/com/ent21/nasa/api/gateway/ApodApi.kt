@@ -3,7 +3,8 @@ package com.ent21.nasa.api.gateway
 import com.ent21.nasa.api.ApiWebService
 import com.ent21.nasa.api.model.Apod
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class ApodApi(private val service: ApiWebService) : ApodRemoteGateway {
     private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT)
