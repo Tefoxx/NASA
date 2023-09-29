@@ -2,6 +2,8 @@ package com.ent21.nasa.utils
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.os.Build
+import android.text.Html
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -69,3 +71,9 @@ fun View.updateMargin(
 fun <T : Item> T.toItem(): Item = this
 
 fun Fragment.getMainNav() = (activity as? MainNavigation)?.getMainNavController()
+
+fun String.applyHtml() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT)
+} else {
+    Html.fromHtml(this)
+}

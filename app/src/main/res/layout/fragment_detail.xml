@@ -14,7 +14,9 @@
             android:id="@+id/collapsingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:collapsedTitleTextColor="?attr/colorPrimary"
             app:contentScrim="?attr/colorSurface"
+            app:expandedTitleTextColor="?attr/colorPrimaryText"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,14 +35,31 @@
                     tools:ignore="ContentDescription"
                     tools:src="@sample/image" />
 
+                <View
+                    android:id="@+id/bottomGradientView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:alpha="0.4"
+                    android:background="@drawable/gradient_bottom"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bottomGuideLine" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/bottomGuideLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.6" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/icon_back"
+                app:navigationIcon="@drawable/icon_back_circle"
                 app:titleMarginEnd="16dp"
                 tools:title="@tools:sample/lorem" />
 
@@ -55,13 +74,49 @@
         android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/descriptionTextView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textSize="16sp"
-            tools:text="@tools:sample/lorem/random" />
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/descriptionTextView"
+                app:layout_constraintEnd_toEndOf="@+id/endGuideLine"
+                app:layout_constraintStart_toStartOf="@+id/startGuideLine"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/date/mmddyy" />
+
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/endGuideLine"
+                app:layout_constraintStart_toStartOf="@+id/startGuideLine"
+                app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+                tools:text="@tools:sample/lorem/random" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/endGuideLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/startGuideLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 

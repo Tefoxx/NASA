@@ -2,4 +2,5 @@
 <resources>
     <attr name="colorPrimaryText" format="color" />
     <attr name="colorShimmer" format="color" />
+    <attr name="colorBackground" format="color" />
 </resources>

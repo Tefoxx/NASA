@@ -5,4 +5,6 @@
     <string name="error_message">Error\nSomething went wrong</string>
     <string name="video">Video</string>
     <string name="update_error">Update error</string>
+    <string name="date"><![CDATA[<b>Date:</b> %1$s]]></string>
+    <string name="explanation"><![CDATA[<b>Explanation:</b> %1$s]]></string>
 </resources>
