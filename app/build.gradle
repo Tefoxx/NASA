@@ -91,7 +91,7 @@ dependencies {
     implementation "androidx.room:room-paging:$room_version"
 
     def paging_version = "3.2.1"
-    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     def glide_version = "4.16.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"

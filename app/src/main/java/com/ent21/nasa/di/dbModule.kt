@@ -8,7 +8,7 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val dbModule = module {
-    single <AppDatabase> {
+    single<AppDatabase> {
         Room.databaseBuilder(
             androidApplication(),
             AppDatabase::class.java,

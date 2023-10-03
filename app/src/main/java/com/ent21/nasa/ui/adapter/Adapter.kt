@@ -35,7 +35,7 @@ class Adapter(
     ) = onBindHolder(holder, position, payloads)
 
     @Suppress("UNCHECKED_CAST")
-    fun onBindHolder(
+    private fun onBindHolder(
         holder: BaseViewHolder<*>,
         position: Int,
         payloads: MutableList<Any>? = null

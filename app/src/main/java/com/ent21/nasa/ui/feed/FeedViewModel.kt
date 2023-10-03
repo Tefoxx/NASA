@@ -11,7 +11,7 @@ import androidx.paging.map
 import com.ent21.nasa.R
 import com.ent21.nasa.api.model.MediaType
 import com.ent21.nasa.db.entity.ApodEntity
-import com.ent21.nasa.ui.LoadStateController
+import com.ent21.nasa.utils.LoadStateController
 import com.ent21.nasa.ui.items.FeedItem
 import com.ent21.nasa.usecase.GetFeedPagingUseCaseAsLiveData
 import com.ent21.nasa.utils.SingleLiveEvent

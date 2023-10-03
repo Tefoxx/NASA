@@ -1,4 +1,4 @@
-package com.ent21.nasa.ui
+package com.ent21.nasa.utils
 
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState

@@ -8,5 +8,4 @@ import com.ent21.nasa.core.BaseActivity
 class MainActivity : BaseActivity(R.layout.activity_main), MainNavigation {
 
     override fun getMainNavController(): NavController = findNavController(R.id.fragmentContainer)
-
 }

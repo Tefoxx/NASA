@@ -1,15 +1,19 @@
 package com.ent21.nasa.utils
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.Html
+import android.text.Spanned
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,6 +24,7 @@ import com.ent21.nasa.ui.MainNavigation
 import com.ent21.nasa.ui.items.Item
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.File
 
 fun ViewModel.launchSafe(
     body: suspend () -> Unit,
@@ -72,8 +77,17 @@ fun <T : Item> T.toItem(): Item = this
 
 fun Fragment.getMainNav() = (activity as? MainNavigation)?.getMainNavController()
 
-fun String.applyHtml() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+fun String.applyHtml(): Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
     Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT)
 } else {
     Html.fromHtml(this)
 }
+
+fun Activity.showPicture(url: String) = startActivity(Intent().run {
+    action = Intent.ACTION_VIEW
+    setDataAndType(url.toUri(), "image/*")
+})
+
+fun Fragment.showPicture(url: String) = activity?.showPicture(url)
+
+fun StringBuilder.appendSeparator(): StringBuilder = append(File.separator)
