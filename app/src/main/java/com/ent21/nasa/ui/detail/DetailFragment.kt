@@ -10,7 +10,6 @@ import com.ent21.nasa.core.BaseFragment
 import com.ent21.nasa.databinding.FragmentDetailBinding
 import com.ent21.nasa.ui.viewBinding
 import com.ent21.nasa.utils.applyHtml
-import com.ent21.nasa.utils.getDp
 import com.ent21.nasa.utils.load
 import com.ent21.nasa.utils.showPicture
 import com.ent21.nasa.utils.toast
@@ -18,8 +17,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.text.SimpleDateFormat
 import java.util.Locale
-
-private const val CONTENT_TITLE_MARGIN = 16
 
 class DetailFragment : BaseFragment(R.layout.fragment_detail) {
     private val args by navArgs<DetailFragmentArgs>()
@@ -43,10 +40,6 @@ class DetailFragment : BaseFragment(R.layout.fragment_detail) {
 
         imageView.load(imgUrl)
         imageView.setOnClickListener { showPicture(imgUrl) }
-
-        toolbar.context.getDp(CONTENT_TITLE_MARGIN).let {
-            toolbar.setContentInsetsAbsolute(it, it)
-        }
 
         downloadButton.setOnClickListener {
             viewModel.saveImageInGallery()

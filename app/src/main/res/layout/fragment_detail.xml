@@ -61,6 +61,7 @@
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/icon_back_circle"
                 app:titleMarginEnd="16dp"
+                app:contentInsetStart="16dp"
                 app:contentInsetEnd="16dp"
                 tools:title="@tools:sample/lorem" >
 

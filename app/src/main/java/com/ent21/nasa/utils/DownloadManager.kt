@@ -9,33 +9,43 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
-import kotlin.text.StringBuilder
 
 private const val APP_IMAGE_DIRECTORY = "NasaApp"
-
+private const val TAG = "DownloadManager"
 class DownloadManager(private val context: Context, private val scope: CoroutineScope) {
 
     private val compressFormat
         get() = Bitmap.CompressFormat.PNG
 
-    suspend fun saveImageInGallery(
+    fun saveImageInGallery(
         title: String,
         url: String,
+        onError: (Throwable) -> Unit,
         permissionRequest: (permission: String) -> Unit
     ) = scope.launch(Dispatchers.IO) {
-        val bitmap = Glide.with(context).asBitmap().load(url).submit().get()
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && checkPermission()) {
-            permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        } else {
-            saveBitmapInGallery(bitmap, title)
+        runCatching {
+            val bitmap = withContext(Dispatchers.IO) {
+                Glide.with(context).asBitmap().load(url).submit().get()
+            }
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && checkPermission()) {
+                permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            } else {
+                saveBitmapInGallery(bitmap, title)
+            }
+        }.onFailure {
+            Log.e(TAG, "Failed to save image in gallery", it)
+            onError(it)
         }
-    }.join()
+    }
 
     private fun checkPermission() = ContextCompat.checkSelfPermission(
         context,

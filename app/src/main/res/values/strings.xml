@@ -7,4 +7,5 @@
     <string name="update_error">Update error</string>
     <string name="date"><![CDATA[<b>Date:</b> %1$s]]></string>
     <string name="explanation"><![CDATA[<b>Explanation:</b> %1$s]]></string>
+    <string name="image_download_error">Image download error</string>
 </resources>

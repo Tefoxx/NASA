@@ -15,21 +15,20 @@ class DetailViewModel(
 
     private val _action = SingleLiveEvent<DetailAction>()
     val action: LiveData<DetailAction> = _action
-    fun saveImageInGallery() = launchSafe(
-        body = {
-            with(args.apod) {
-                downloadManager.saveImageInGallery(
-                    title = title,
-                    url = hdUrl ?: url,
-                    permissionRequest = { _action.postValue(DetailAction.PermissionRequest(it)) }
-                )
-            }
-        },
-        onError = { _action.value = DetailAction.ShowToast(R.string.error_message) }
-    )
+    fun saveImageInGallery() = with(args.apod) {
+        downloadManager.saveImageInGallery(
+            title = title,
+            url = hdUrl ?: url,
+            onError = { _action.postValue(DetailAction.ShowToast(R.string.image_download_error)) },
+            permissionRequest = { _action.postValue(DetailAction.PermissionRequest(it)) }
+        )
+    }
+
 
     fun onPermissionResult(isGranted: Boolean) {
-        if (isGranted) { saveImageInGallery() }
+        if (isGranted) {
+            saveImageInGallery()
+        }
     }
 }
 
