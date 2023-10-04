@@ -60,13 +60,13 @@ class FeedViewModel(
         num = apod.num
     ) {
         _action.value = if (apod.mediaType == MediaType.VIDEO)
-            FeedAction.ShowVideoDetails else FeedAction.ShowDetails(apod)
+            FeedAction.ShowVideoDetails(apod) else FeedAction.ShowDetails(apod)
     }
 }
 
 sealed class FeedAction {
     data class ShowDetails(val apod: ApodEntity) : FeedAction()
-    object ShowVideoDetails : FeedAction()
+    data class ShowVideoDetails(val apod: ApodEntity) : FeedAction()
     data class ScrollToPosition(val position: Int) : FeedAction()
     data class ShowRefresh(val show: Boolean) : FeedAction()
     data class ShowToast(@StringRes val textResId: Int) : FeedAction()

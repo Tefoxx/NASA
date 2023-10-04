@@ -81,6 +81,7 @@ class FeedViewHolder(private val viewBinding: ItemFeedBinding) :
     }
 
     private fun updateDescription(item: FeedItem) = with(viewBinding) {
+        descriptionTextView.isVisible = item.explanation.isNotEmpty()
         descriptionTextView.text = item.explanation
     }
 

@@ -9,6 +9,7 @@ plugins {
 def STRING = "String"
 def API_URL = "API_URL"
 def API_KEY = "API_KEY"
+def YOUTUBE_API_KEY = "YOUTUBE_API_KEY"
 
 android {
     namespace 'com.ent21.nasa'
@@ -25,6 +26,7 @@ android {
 
         buildConfigField STRING, API_URL, "\"${rootProject.ext.baseApiUrl}\""
         buildConfigField STRING, API_KEY, "\"${rootProject.ext.localProperties["apiKey"]}\""
+        buildConfigField STRING, YOUTUBE_API_KEY, "\"${rootProject.ext.localProperties["youtubeApiKey"]}\""
     }
 
     buildFeatures {
@@ -102,9 +104,9 @@ dependencies {
     def shimmer_version = "0.5.0"
     implementation "com.facebook.shimmer:shimmer:$shimmer_version"
 
-    def exoplayer_version = "2.19.1"
-    implementation "com.google.android.exoplayer:exoplayer:$exoplayer_version"
-    implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
+    // Right now I wish I had my own exoplayer with a link to the video, but it won’t work with YouTube)
+    def youtube_player = "12.1.0"
+    implementation "com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtube_player"
 
     def coordinator_version = "1.2.0"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinator_version"

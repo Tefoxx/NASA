@@ -56,7 +56,9 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
                     MainNavGraphDirections.toDetailFragment(action.apod)
                 )
 
-                is FeedAction.ShowVideoDetails -> {}
+                is FeedAction.ShowVideoDetails -> getMainNav()?.navigate(
+                    MainNavGraphDirections.toVideoDetailFragment(action.apod)
+                )
             }
         }
 

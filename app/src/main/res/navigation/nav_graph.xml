@@ -21,4 +21,17 @@
     <action
         android:id="@+id/toDetailFragment"
         app:destination="@+id/detailFragment" />
+
+    <fragment
+        android:id="@+id/videoDetailFragment"
+        android:name="com.ent21.nasa.ui.videoDetail.VideoDetailFragment"
+        android:label="VideoDetailFragment" >
+        <argument
+            android:name="apod"
+            app:argType="com.ent21.nasa.db.entity.ApodEntity" />
+    </fragment>
+
+    <action
+        android:id="@+id/toVideoDetailFragment"
+        app:destination="@+id/videoDetailFragment" />
 </navigation>
