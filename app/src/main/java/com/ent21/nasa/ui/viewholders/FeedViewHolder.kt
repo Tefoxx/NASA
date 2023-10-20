@@ -6,6 +6,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.ent21.nasa.BuildConfig
 import com.ent21.nasa.core.BaseViewHolder
 import com.ent21.nasa.databinding.ItemFeedBinding
 import com.ent21.nasa.ui.items.FeedItem
@@ -69,6 +70,7 @@ class FeedViewHolder(private val viewBinding: ItemFeedBinding) :
     }
 
     private fun updateNum(item: FeedItem) = with(viewBinding) {
+        testView.isVisible = BuildConfig.DEBUG
         testView.text = item.num.toString()
     }
 
