@@ -12,16 +12,15 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
 private const val APP_IMAGE_DIRECTORY = "NasaApp"
-private const val TAG = "DownloadManager"
-class DownloadManager(private val context: Context, private val scope: CoroutineScope) {
+private const val TAG = "ImageManager"
+
+class ImageManager(private val context: Context, private val scope: CoroutineScope) {
 
     private val compressFormat
         get() = Bitmap.CompressFormat.PNG
@@ -33,9 +32,7 @@ class DownloadManager(private val context: Context, private val scope: Coroutine
         permissionRequest: (permission: String) -> Unit
     ) = scope.launch(Dispatchers.IO) {
         runCatching {
-            val bitmap = withContext(Dispatchers.IO) {
-                Glide.with(context).asBitmap().load(url).submit().get()
-            }
+            val bitmap = Glide.with(context).asBitmap().load(url).submit().get()
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && checkPermission()) {
                 permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             } else {

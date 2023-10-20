@@ -5,7 +5,7 @@ import com.ent21.nasa.api.ApiWebService
 import com.ent21.nasa.api.gateway.ApodApi
 import com.ent21.nasa.api.gateway.ApodRemoteGateway
 import com.ent21.nasa.ui.feed.FeedRemoteMediator
-import com.ent21.nasa.utils.DownloadManager
+import com.ent21.nasa.utils.ImageManager
 import com.google.gson.GsonBuilder
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -26,5 +26,5 @@ val netModule = module {
 
     factory { FeedRemoteMediator(get(), get()) }
 
-    single { DownloadManager(get(), get(named(APP_SCOPE))) }
+    single { ImageManager(get(), get(named(APP_SCOPE))) }
 }
