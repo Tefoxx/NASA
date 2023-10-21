@@ -4,16 +4,17 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-private const val DEFAULT_SPACE = 0
 
 class SpaceItemDecorator(
-    private val left: Int = DEFAULT_SPACE,
-    private val top: Int = DEFAULT_SPACE,
-    private val right: Int = DEFAULT_SPACE,
-    private val bottom: Int = DEFAULT_SPACE,
+    private val left: Int,
+    private val top: Int,
+    private val right: Int,
+    private val bottom: Int,
     private val divider: Int,
     private val orientation: Int = RecyclerView.VERTICAL
 ) : RecyclerView.ItemDecoration() {
+
+    constructor(margin: Int, divider: Int) : this(margin, margin, margin, margin, divider)
 
     override fun getItemOffsets(
         outRect: Rect,

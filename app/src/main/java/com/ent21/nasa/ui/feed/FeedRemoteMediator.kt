@@ -28,7 +28,6 @@ class FeedRemoteMediator(
             }
 
             val response = remoteGateway.getApodsRandom(DEFAULT_COUNT_LOAD)
-            //Log.d("SNK", "\n---------------------\nloadType = $loadType;\ndata = ${response.map { it.title }}")
             if (loadType == LoadType.REFRESH) {
                 localGateway.clearAndInsertAll(response)
             } else {

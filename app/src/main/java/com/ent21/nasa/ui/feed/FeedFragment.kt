@@ -1,7 +1,6 @@
 package com.ent21.nasa.ui.feed
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.asLiveData
 import com.ent21.nasa.MainNavGraphDirections
@@ -26,9 +25,10 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?): Unit = with(viewBinding) {
         super.onViewCreated(view, savedInstanceState)
+
         recyclerView.adapter = adapter
         view.context.getDp(SPACE).let {
-            recyclerView.addItemDecoration(SpaceItemDecorator(it, it, it, it, it))
+            recyclerView.addItemDecoration(SpaceItemDecorator(it, it))
         }
 
         adapter.loadStateFlow.asLiveData().observe(viewLifecycleOwner) {
@@ -49,7 +49,6 @@ class FeedFragment : BaseFragment(R.layout.fragment_feed) {
 
         viewModel.action.observe(viewLifecycleOwner) { action ->
             when (action) {
-                is FeedAction.ShowRefresh -> swipeRefreshLayout.isRefreshing = action.show
                 is FeedAction.ShowToast -> toast(action.textResId)
                 is FeedAction.ScrollToPosition -> recyclerView.scrollToPosition(0)
                 is FeedAction.ShowDetails -> getMainNav()?.navigate(

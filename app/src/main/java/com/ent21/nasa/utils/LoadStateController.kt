@@ -28,16 +28,16 @@ class LoadStateController(
                     when (state) {
                         is LoadState.NotLoading -> canScroll = true
                         is LoadState.Error -> onError()
-                        is LoadState.Loading -> {}
+                        else -> {}
                     }
                 }
         }
     }
 
     /**
-    * Because DiffUtil works after receiving the NotLoad status for the ui from the pager adapter
-    * and scrollToTop will not work correct. [itemsWasUpdated] synchronizes scrollToTop and DiffUtil
-    */
+     * Because DiffUtil works after receiving the NotLoad status for the ui + source,
+     * and scrollToPosition(0) will not work correct. [itemsWasUpdated] synchronizes scrollToTop and DiffUtil
+     */
     fun itemsWasUpdated() {
         if (canScroll) {
             scrollToTop?.invoke()

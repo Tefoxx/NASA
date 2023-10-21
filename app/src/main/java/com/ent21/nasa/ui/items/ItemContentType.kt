@@ -8,6 +8,7 @@ import com.ent21.nasa.databinding.ItemFeedBinding
 import com.ent21.nasa.ui.viewholders.EmptyViewHolder
 import com.ent21.nasa.ui.viewholders.FeedViewHolder
 
+// Here all types of items for the adapter can be declared.
 enum class ItemContentType {
     EmptyItemType {
         override fun onCreateViewHolder(parent: ViewGroup): BaseViewHolder<*> = EmptyViewHolder(

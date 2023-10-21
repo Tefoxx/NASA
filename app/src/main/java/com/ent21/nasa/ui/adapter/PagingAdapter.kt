@@ -9,7 +9,7 @@ import com.ent21.nasa.ui.items.ItemContentType
 
 class PagingAdapter(
     diffCallback: DiffUtil.ItemCallback<Item>
-) : PagingDataAdapter<Item, BaseViewHolder<*>>(diffCallback) {
+) : PagingDataAdapter<Item, BaseViewHolder<*>>(diffCallback), ItemAdapter {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -33,7 +33,7 @@ class PagingAdapter(
     ) = onBindHolder(holder, position, payloads)
 
     @Suppress("UNCHECKED_CAST")
-    fun onBindHolder(
+    private fun onBindHolder(
         holder: BaseViewHolder<*>,
         position: Int,
         payloads: MutableList<Any>? = null
@@ -43,4 +43,6 @@ class PagingAdapter(
             if (payloads.isNullOrEmpty()) holder.bind(it) else holder.update(it, payloads[0] as Set<*>)
         }
     }
+
+    override fun getItemByPosition(position: Int): Item? = getItem(position)
 }

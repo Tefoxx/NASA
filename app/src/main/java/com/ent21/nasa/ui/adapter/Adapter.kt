@@ -10,7 +10,7 @@ import com.ent21.nasa.ui.items.ItemContentType
 
 class Adapter(
     diffCallback: DiffUtil.ItemCallback<Item>
-) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+) : RecyclerView.Adapter<BaseViewHolder<*>>(), ItemAdapter {
 
     fun setCollection(list: List<Item>) = differ.submitList(list)
 
@@ -49,4 +49,5 @@ class Adapter(
     override fun getItemViewType(position: Int) = differ.currentList[position].getType().ordinal
 
     override fun getItemCount(): Int = differ.currentList.size
+    override fun getItemByPosition(position: Int): Item? = differ.currentList.getOrNull(position)
 }

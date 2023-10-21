@@ -3,7 +3,6 @@ package com.ent21.nasa.ui.items
 import java.util.Date
 
 data class FeedItem(
-    override val id: String,
     val num: Int,
     val date: Date,
     val explanation: String,
@@ -12,6 +11,14 @@ data class FeedItem(
     val videoUrl: String?,
     val onClick: () -> Unit
 ) : Item {
+
+    /*
+      This is necessary for diffutil to work correctly, because
+      NASA api does not provide unique ids in the response (although the date can be used as an id),
+      and if it did, the feed is random and has repeating elements (in this case, diffutil would
+      still not work correctly)
+    */
+    override val id: String = "${date.time}_${num}"
     override fun getType(): ItemContentType = ItemContentType.FeedItemType
 
     //in this case it is not necessary, but for example

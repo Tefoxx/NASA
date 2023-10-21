@@ -47,6 +47,10 @@ class FeedViewHolder(private val viewBinding: ItemFeedBinding) :
 
     }
 
+    init {
+        viewBinding.root.setOnClickListener { getItem()?.onClick?.invoke() }
+    }
+
     override fun bind(item: FeedItem): Unit = with(viewBinding) {
         root.clipToOutline = true
         shimmerLayout.showShimmer(true)
@@ -56,7 +60,6 @@ class FeedViewHolder(private val viewBinding: ItemFeedBinding) :
         updateDate(item)
         updateVideoIcon(item)
         updateNum(item)
-        root.setOnClickListener { item.onClick() }
     }
 
     override fun update(item: FeedItem, payloads: Set<*>) = payloads.forEach {

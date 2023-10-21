@@ -8,7 +8,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingLayout"
@@ -57,20 +58,20 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:contentInsetEnd="16dp"
+                app:contentInsetStart="16dp"
                 app:contentInsetStartWithNavigation="0dp"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/icon_back_circle"
                 app:titleMarginEnd="16dp"
-                app:contentInsetStart="16dp"
-                app:contentInsetEnd="16dp"
-                tools:title="@tools:sample/lorem" >
+                tools:title="@tools:sample/lorem">
 
                 <ImageView
-                    android:src="@drawable/icon_download_cirle"
                     android:id="@+id/downloadButton"
-                    android:layout_gravity="end|center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end|center"
+                    android:src="@drawable/icon_download_cirle"
                     tools:ignore="ContentDescription" />
 
             </androidx.appcompat.widget.Toolbar>
